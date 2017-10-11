@@ -40,3 +40,6 @@ config :slung, Slung.Repo,
   database: "slung_alt_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :guardian, Guardian,
+  secret_key: "PG9xnUidN9ww1fjeixmVmEsr4vO6PcDsxgzWX3HyLuF9H+EYYKRoIvmm7zIbRPsj"

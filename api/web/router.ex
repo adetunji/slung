@@ -11,6 +11,8 @@ defmodule Slung.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", Slung do
@@ -19,8 +21,12 @@ defmodule Slung.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Slung do
-  #   pipe_through :api
-  # end
+  scope "/api", Slung do
+    pipe_through :api
+
+    post "/sessions", SessionController, :create
+    delete "/sessions", SessionController, :delete
+    post "/sessions/refresh", SessionController, :refresh
+    resources "/users", UserController, only: [:create]
+  end
 end
