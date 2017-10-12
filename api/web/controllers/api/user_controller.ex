@@ -3,8 +3,8 @@ defmodule Slung.UserController do
 
   alias Slung.User
 
-  def create(conn, %{"user" => user_params}) do
-    changeset = User.changeset(%User{}, user_params)
+  def create(conn, params) do
+    changeset = User.registration_changeset(%User{}, params)
 
     case Repo.insert(changeset) do
       {:ok, user} ->
