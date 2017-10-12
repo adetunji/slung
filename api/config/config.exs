@@ -23,9 +23,9 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :guardian, Guardian,
-  issuer: "Sling",
+  issuer: "Slung",
   ttl: {30, :days},
   verify_issuer: true,
-  serializer: Sling.GuardianSerializer
+  serializer: Slung.GuardianSerializer
   
 import_config "#{Mix.env}.exs"

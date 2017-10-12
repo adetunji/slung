@@ -38,5 +38,7 @@ defmodule Slung.Endpoint do
     key: "_slung_key",
     signing_salt: "6Q2tEWpH"
 
+  plug CORSPlug
+  
   plug Slung.Router
 end
