@@ -3,6 +3,8 @@ defmodule Slung.UserController do
 
   alias Slung.User
 
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Slung.SessionController] when action in [:rooms]
+
   def create(conn, params) do
     changeset = User.registration_changeset(%User{}, params)
 
@@ -19,5 +21,11 @@ defmodule Slung.UserController do
         |> put_status(:unprocessable_entity)
         |> render(Slung.ChangesetView, "error.json", changeset: changeset)
     end
+  end
+
+  def rooms(conn, _params) do
+    current_user = Guardian.Plug.current_resource(conn)
+    rooms = Repo.all(assoc(current_user, :rooms))
+    render(conn, Slung.RoomView, "index.json", %{rooms: rooms})
   end
 end
